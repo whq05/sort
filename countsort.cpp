@@ -20,38 +20,38 @@ int arrmax(int *arr, int len)
     int max = INT_MIN;
     for (i = 0; i < len; i++)
     {
-        if (max < arr[i]) max = arr[i];
+        if (max < arr[i])
+            max = arr[i];
     }
 
     return max;
-
 }
-
 
 // 计数排序主函数，arr-待排序数组的地址，len-数组的长度
 void countsort(int *arr, int len)
 {
-    if (len < 2) return;
+    if (len < 2)
+        return;
 
     int max = arrmax(arr, len); // 获取待排序数组的最大元素的值
-    int arrtmp[max + 1]; // 临时数组的大小为max+1
+    int arrtmp[max + 1];        // 临时数组的大小为max+1
 
-    memset(arrtmp, 0, sizeof(arrtmp));  // 初始化临时数组
+    memset(arrtmp, 0, sizeof(arrtmp)); // 初始化临时数组
 
     int i, j, k;
 
     // 临时数组计数
-    for (i = 0; i < len; i++) arrtmp[arr[i]]++;
+    for (i = 0; i < len; i++)
+        arrtmp[arr[i]]++;
 
     // 把临时数组计数的内容填充到arr中
     i = 0;
-    for (j = 0; j <=max; j++)
+    for (j = 0; j <= max; j++)
     {
-        for (k = 0; k < arrtmp[j]; k++) arr[i++] = j;
+        for (k = 0; k < arrtmp[j]; k++)
+            arr[i++] = j;
     }
-
 }
-
 
 int main()
 {
