@@ -1,5 +1,5 @@
 all:	bubblesort bubblesort_better selectsort selectsort_better insertsort shellsort quicksort mergesort mergesort1\
-	heapsort countsort countsort_better countsort_example bucketsort radixsort 
+	heapsort countsort countsort_better countsort_example bucketsort  radixsort 
 
 bubblesort:bubblesort.cpp
 	g++ -g -o bubblesort bubblesort.cpp
