@@ -12,23 +12,23 @@ using namespace std;
 
 void groupsort(int *arr, int len, int pos, int step)
 {
-    int i;  // 需要排序元素的计数器
-    int j;  // 插入排序时，需要后移元素的计数器
-    int temp;   // 当前需要排序的元素的值
+    int i;    // 需要排序元素的计数器
+    int j;    // 插入排序时，需要后移元素的计数器
+    int temp; // 当前需要排序的元素的值
 
     // 从已排序的最右边开始，把大于当前排序的元素后移。
     for (i = pos + step; i < len; i += step)
     {
-        temp = arr[i];  // 待排序元素
+        temp = arr[i]; // 待排序元素
         for (j = i - step; j >= 0; j -= step)
         {
-            if (arr[j] <= temp) break;
+            if (arr[j] <= temp)
+                break;
             arr[j + step] = arr[j]; // 逐个元素后移
         }
-        arr[j + step] = temp;   // 插入当前排序元素
+        arr[j + step] = temp; // 插入当前排序元素
     }
 }
-
 
 // 希尔排序，arr是待排序数组的首地址，len是数组的大小
 void shellsort(int *arr, unsigned int len)
@@ -45,7 +45,6 @@ void shellsort(int *arr, unsigned int len)
         }
     }
 }
-
 
 int main()
 {
