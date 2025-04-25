@@ -40,18 +40,21 @@ void heapify(int *arr, int start, int end)
 // 采用递归实现heapify
 void heapify1(int *arr, int start, int end)
 {
-    // 确定父节点和左子节点的数组下标   
+    // 确定父节点和左子节点的数组下标
     int dad = start;
     int son = 2 * dad + 1;
 
     // 如果子节点的下标没有超出范围，循环继续
-    if (son > end) return;
+    if (son > end)
+        return;
 
     // 先比较两个子节点大小，选择最大的
-    if ((son + 1 <= end) && (arr[son] < arr[son + 1])) son++;
+    if ((son + 1 <= end) && (arr[son] < arr[son + 1]))
+        son++;
 
     // 如果父节点大于子节点代表调整完毕，直接跳出函数
-    if (arr[dad] >= arr[son]) return;
+    if (arr[dad] >= arr[son])
+        return;
 
     // 否则交换父子內容再继续子节点和孙节点比较
     swap(arr[dad], arr[son]);
