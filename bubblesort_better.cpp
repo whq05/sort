@@ -33,10 +33,10 @@ void bubblesort1(int *arr, int len)
                 swapped = true; 
             }
         }
-        if (!swapped) // 如果没有发生交换，说明数组已经有序，可以提前结束排序
-        {
-            return;
-        }
+
+        // 如果没有发生交换，说明数组已经有序，可以提前结束排序
+        if (!swapped)   return;
+            
     }
 }
 
