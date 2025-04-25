@@ -9,7 +9,7 @@
 #include <vector>
 #include <algorithm>
 #include <limits.h> // INT_MIN
-#include <cstring> // memcpy
+#include <cstring>  // memcpy
 #include <iomanip>  // std::setw
 
 using namespace std;
@@ -18,8 +18,9 @@ using namespace std;
 int arrmax(int *arr, int len)
 {
     int imax = INT_MIN;
-    for (int i = 0; i < len; i++) imax = max(imax, arr[i]);
-    return imax; 
+    for (int i = 0; i < len; i++)
+        imax = max(imax, arr[i]);
+    return imax;
 }
 
 // 对数组arr按指数位进行排序。
@@ -28,30 +29,32 @@ int arrmax(int *arr, int len)
 void _radixsort(int *arr, int len, int exp)
 {
     int i;
-    int result[len];    // 存放从桶中收集后数据的临时数组
-    int buckets[10] = {0};  // 初始化10个桶（注意这里没用二维数组，这正是基数排序的精妙所在）
+    int result[len];       // 存放从桶中收集后数据的临时数组
+    int buckets[10] = {0}; // 初始化10个桶（注意这里没用二维数组，这正是基数排序的精妙所在）
 
     // 遍历arr，将数据出现的次数存储在buckets中
-    for (i = 0; i < len; i++) buckets[(arr[i] / exp) % 10]++;
+    for (i = 0; i < len; i++)
+        buckets[(arr[i] / exp) % 10]++;
 
     // 调整buckets各元素的值，调整后的值就是arr中元素在result中的位置
-    for (i = 1; i < 10; i++) buckets[i] += buckets[i - 1];
+    for (i = 1; i < 10; i++)
+        buckets[i] += buckets[i - 1];
 
     // 将arr中的元素填充到result中
     // for (i = 0; i < len; i++) 如果写成这样就不稳定了
     /*
     whq@whq:~/github/sort$ ./radixsort   ------> 使用了for (i = len - 1; i >= 0; i--)的写法
-    exp=1      750 602 203 144 504 905 215 836 26 946 347 527 738 848 219 
-    exp=10     602 203 504 905 215 219 26 527 836 738 144 946 347 848 750 
-    exp=100    26 144 203 215 219 347 504 527 602 738 750 836 848 905 946 
-    排序后的数组为：26 144 203 215 219 347 504 527 602 738 750 836 848 905 946 
-    whq@whq:~/github/sort$ make        
+    exp=1      750 602 203 144 504 905 215 836 26 946 347 527 738 848 219
+    exp=10     602 203 504 905 215 219 26 527 836 738 144 946 347 848 750
+    exp=100    26 144 203 215 219 347 504 527 602 738 750 836 848 905 946
+    排序后的数组为：26 144 203 215 219 347 504 527 602 738 750 836 848 905 946
+    whq@whq:~/github/sort$ make
     g++ -g -o radixsort radixsort.cpp
     whq@whq:~/github/sort$ ./radixsort  ------> 使用了for (i = 0; i < len; i++)的写法
-    exp=1      750 602 203 504 144 215 905 946 26 836 527 347 848 738 219 
-    exp=10     905 504 203 602 219 215 527 26 738 836 848 347 946 144 750 
-    exp=100    26 144 215 219 203 347 527 504 602 750 738 848 836 946 905 
-    排序后的数组为：26 144 215 219 203 347 527 504 602 750 738 848 836 946 905 
+    exp=1      750 602 203 504 144 215 905 946 26 836 527 347 848 738 219
+    exp=10     905 504 203 602 219 215 527 26 738 836 848 347 946 144 750
+    exp=100    26 144 215 219 203 347 527 504 602 750 738 848 836 946 905
+    排序后的数组为：26 144 215 219 203 347 527 504 602 750 738 848 836 946 905
     */
     for (i = len - 1; i >= 0; i--)
     {
@@ -61,33 +64,34 @@ void _radixsort(int *arr, int len, int exp)
     }
 
     // 将排序好的数组result复制到数组arr中
-    memcpy(arr,result,len*sizeof(int));
+    memcpy(arr, result, len * sizeof(int));
 }
-
 
 // 基数排序主函数，arr-待排序的数组，len-数组arr的长度
 void radixsort(int *arr, int len)
 {
     int imax = arrmax(arr, len); // 获取数组arr的最大值
 
-    int iexp;   // 排序指数，iexp=1：按个位排序；iexp=10：按十位排序；......
+    int iexp; // 排序指数，iexp=1：按个位排序；iexp=10：按十位排序；......
 
     // 从个位开始，对数组arr按指数位进行排序
     for (iexp = 1; imax / iexp > 0; iexp *= 10)
     {
         _radixsort(arr, len, iexp);
-        std::cout << "exp=" << std::left << std::setw(5) << iexp << "  ";                              
-        for (int i = 0; i < len; ++i) std::cout << std::setw(2) << arr[i] << " ";   
-        cout << endl;           
+        std::cout << "exp=" << std::left << std::setw(5) << iexp << "  ";
+        for (int i = 0; i < len; ++i)
+            std::cout << std::setw(2) << arr[i] << " ";
+        cout << endl;
     }
 }
 
 int main()
 {
-    vector<int> vec{144,203,738,905,347,215,836,26,527,602,946,504,219,750,848};
+    vector<int> vec{144, 203, 738, 905, 347, 215, 836, 26, 527, 602, 946, 504, 219, 750, 848};
     int len = vec.size();
     cout << "原始数组：";
-    for (int i = 0; i < len; i++) {
+    for (int i = 0; i < len; i++)
+    {
         cout << vec[i] << " ";
     }
     cout << endl;
@@ -100,7 +104,6 @@ int main()
     cout << endl;
     return 0;
 }
-
 
 /*
 
@@ -142,24 +145,24 @@ int getDigit(int num, int position) {
 // MSD基数排序的递归辅助函数
 void msdRadixSortHelper(int* arr, int len, int currentDigit, int* originalArr, int originalLen) {
     if (currentDigit < 1 || len <= 1) return;  // 基本情况：没有更多位数或数组长度为1
-    
+
     vector<vector<int>> buckets(10);  // 创建10个桶（对应0-9）
-    
+
     // 根据当前位数将元素分配到桶中
     for (int i = 0; i < len; ++i) {
         int d = getDigit(arr[i], currentDigit);
         buckets[d].push_back(arr[i]);
     }
-    
+
     vector<int> temp;  // 临时数组，用于合并桶中的元素
     for (auto &bucket : buckets) {
         for (int num : bucket) {
             temp.push_back(num);
         }
     }
-    
+
     memcpy(arr, temp.data(), len * sizeof(int));  // 将临时数组的内容复制回原数组
-    
+
     // 打印当前排序状态
     int startIdx = arr - originalArr;  // 计算当前子数组在原数组中的起始位置
     cout << "位数=" << setw(5) << left << currentDigit << "  ";
@@ -170,7 +173,7 @@ void msdRadixSortHelper(int* arr, int len, int currentDigit, int* originalArr, i
             cout << setw(3) << originalArr[i] << " ";     // 打印原数组其他元素
     }
     cout << endl;
-    
+
     // 对每个非空桶递归应用MSD基数排序
     int idx = 0;
     for (auto &bucket : buckets) {
@@ -193,17 +196,17 @@ void msdRadixSort(int* arr, int len) {
 int main() {
     vector<int> vec{144,203,738,905,347,215,836,26,527,602,946,504,219,750,848};  // 初始化数组
     int len = vec.size();  // 获取数组长度
-    
+
     cout << "原始数组：";
     for (int num : vec) cout << num << " ";  // 打印原始数组
     cout << endl;
-    
+
     msdRadixSort(vec.data(), len);  // 调用MSD基数排序函数
-    
+
     cout << "排序后的数组为：";
     for (int num : vec) cout << num << " ";  // 打印排序后的数组
     cout << endl;
-    
+
     return 0;
 }
 */
